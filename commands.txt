@@ -1,0 +1,6 @@
+Install TensorFlow
+pip install --user --upgrade tensorflow
+
+Clone the example repo
+git clone https://github.com/GoogleCloudPlatform/cloudml-samples.git
+
