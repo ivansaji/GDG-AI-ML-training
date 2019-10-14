@@ -156,3 +156,32 @@ MODEL_BINARIES=$OUTPUT_PATH/export/census/<timestamp>/
 eg:MODEL_BINARIES=$OUTPUT_PATH/export/census/1571036086/
 
 Note: The timestamp for this training run will not be the same as the timestamp generated during your local training run above. Be sure to scroll through the gsutil ls output to find this new timestamp.
+
+You'll deploy this trained model.
+
+Run the following command to create a version v1 of your model:
+
+gcloud ai-platform versions create v1 \
+--model $MODEL_NAME \
+--origin $MODEL_BINARIES \
+--runtime-version 1.10
+
+It may take several minutes to deploy your trained model. When done, you can see a list of your models using the models list command:
+
+gcloud ai-platform models list
+
+Send an online prediction request to your deployed model
+You can now send prediction requests to your deployed model. The following command sends a prediction request using the test.json file included in the GitHub repository.
+
+gcloud ai-platform predict \
+--model $MODEL_NAME \
+--version v1 \
+--json-instances ../test.json
+
+The response includes the probabilities of each label (>50K and <=50K) based on the data entry in test.json, thus indicating whether the predicted income is greater than or less than 50,000 dollars
+
+CLASS_IDS  CLASSES  LOGISTIC               LOGITS                PROBABILITIES
+[0]        [u'0']   [0.06142739951610565]  [-2.726504325866699]  [0.9385725855827332, 0.061427392065525055]
+Where class 0 means income <= 50k and class 1 means income >50k.
+
+Note: AI PLatform supports batch prediction too, but it's not included in this lab. See the documentation for more info.
