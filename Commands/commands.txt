@@ -5,3 +5,14 @@ Clone the example repo
 git clone https://github.com/GoogleCloudPlatform/cloudml-samples.git
 cd cloudml-samples/census/estimator
 
+Get your training data
+mkdir data
+gsutil -m cp gs://cloud-samples-data/ml-engine/census/data/* data/
+
+Now set the TRAIN_DATA and EVAL_DATA variables to your local file paths 
+export TRAIN_DATA=$(pwd)/data/adult.data.csv
+export EVAL_DATA=$(pwd)/data/adult.test.csv
+
+To open the adult.data.csv
+head data/adult.data.csv
+
